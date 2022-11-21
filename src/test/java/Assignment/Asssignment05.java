@@ -1,6 +1,16 @@
 package Assignment;
 
-public class Asssignment05 {
+import base_urls.RegrestBaseUrl;
+import io.restassured.response.Response;
+import org.junit.Test;
+import test_data.RegresTestData01;
+import test_data.RegrestTestData;
+
+import java.util.Map;
+
+import static io.restassured.RestAssured.given;
+
+public class Asssignment05 extends RegrestBaseUrl {
        /*
         Given
           https://reqres.in/api/unknown/3
@@ -26,4 +36,30 @@ public class Asssignment05 {
         }
 }
       */
+
+
+    @Test
+    public void assignment05(){
+        //set the url
+
+        spec.pathParams("first","unknown","second",3);
+
+        //set the expected data
+
+        RegresTestData01 obj=new RegresTestData01();
+        Map<String,Object> data=obj.regrestDataMap("true red",2002,"#BF1932","19-1664");
+        Map<String,String> support=obj.supportDataMap("https://reqres.in/#support-heading","To keep ReqRes free, contributions towards server costs are appreciated!");
+        Map<Object,Object> expectedData=obj.expectedDataMapSetUp(data,support);
+
+        System.out.println("expected data =" + expectedData);
+
+        //send the request get the response
+
+        Response response=given().spec(spec).when().get("/{first}/{second}");
+        response.prettyPrint();
+
+
+
+
+    }
 }
