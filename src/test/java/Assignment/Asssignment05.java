@@ -1,14 +1,20 @@
 package Assignment;
 
 import base_urls.RegrestBaseUrl;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import org.junit.Assert;
 import org.junit.Test;
+import org.testng.asserts.SoftAssert;
 import test_data.RegresTestData01;
 import test_data.RegrestTestData;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
+import static org.testng.AssertJUnit.assertEquals;
+import static org.testng.AssertJUnit.assertFalse;
 
 public class Asssignment05 extends RegrestBaseUrl {
        /*
@@ -57,6 +63,29 @@ public class Asssignment05 extends RegrestBaseUrl {
 
         Response response=given().spec(spec).when().get("/{first}/{second}");
         response.prettyPrint();
+
+
+        //do assertion
+
+        JsonPath jsonPath=response.jsonPath();
+        //hard assertion
+        Assert.assertEquals("true red",jsonPath.getString("data.name"));
+        Assert.assertEquals(2002,jsonPath.getInt("data.year"));
+        Assert.assertEquals("#BF1932",jsonPath.getString("data.color"));
+        Assert.assertEquals("19-1664",jsonPath.getString("data.pantone_value"));
+        Assert.assertEquals("https://reqres.in/#support-heading",jsonPath.getString("support.url"));
+        Assert.assertEquals("To keep ReqRes free, contributions towards server costs are appreciated!",jsonPath.getString("support.text"));
+
+        SoftAssert softAssert=new SoftAssert();
+
+        softAssert.assertEquals(jsonPath.getString("data.name"),"true red");
+        softAssert.assertEquals(jsonPath.getInt("data.year"),2002);
+        softAssert.assertEquals(jsonPath.getString("data.color"),"#BF1932");
+        softAssert.assertEquals(jsonPath.getString("data.pantone_value"),"19-1664");
+        softAssert.assertEquals(jsonPath.getString("support.url"),"https://reqres.in/#support-heading");
+        softAssert.assertEquals(jsonPath.getString("support.text"),"To keep ReqRes free, contributions towards server costs are appreciated!");
+
+        softAssert.assertAll();
 
 
 
