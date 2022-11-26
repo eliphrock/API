@@ -1,7 +1,17 @@
 package post_request;
 
 import base_urls.DummyApiBaseUrl;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Test;
+import pojos.DummyApiDataPojo;
+import pojos.DummyApiResponsePojo;
+
+import java.io.IOException;
+
+import static io.restassured.RestAssured.given;
+import static org.testng.AssertJUnit.assertEquals;
 
 public class Post05ObjectMapper extends DummyApiBaseUrl {
 
@@ -65,15 +75,33 @@ public class Post05ObjectMapper extends DummyApiBaseUrl {
      */
 
     @Test
-    public void post05(){
+    public void post05() throws IOException {
         //set the url
 
         spec.pathParam("first","create");
 
         //set the expected data
 
+        DummyApiDataPojo expectedData=new DummyApiDataPojo("Ali Can",111111,23,"Perfect image");
+        System.out.println("expectedData= "+ expectedData);
 
+        //send the request and get the response
 
+        Response response=given().spec(spec).contentType(ContentType.JSON).body(expectedData).when().post("/{first}");
+        response.prettyPrint();
+
+        //do assertion
+
+       DummyApiResponsePojo actualData= new ObjectMapper().readValue(response.asString(),DummyApiResponsePojo.class);
+        System.out.println("actualData =" +actualData);
+
+        assertEquals(200,response.statusCode());
+        assertEquals("success",actualData.getStatus());
+        assertEquals(expectedData.getEmployee_name(),actualData.getData().getEmployee_name());
+        assertEquals(expectedData.getEmployee_salary(),actualData.getData().getEmployee_salary());
+        assertEquals(expectedData.getEmployee_age(),actualData.getData().getEmployee_age());
+        assertEquals(expectedData.getProfile_image(),actualData.getData().getProfile_image());
+        assertEquals("Successfully! Record has been added.",actualData.getMessage());
 
     }
 }
