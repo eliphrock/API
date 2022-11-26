@@ -48,7 +48,7 @@ public class Get16 extends HerOkuAppBaseUrl {
 
         //do assertion
 
-       BookingPojo actualData= JsonUtils.convertJsonToJavaObject(response.asString(), BookingPojo.class);
+       BookingPojo actualData= JsonUtils.convertJsonToJavaObject(response.asString(), BookingPojo.class); // to use pojo class with object mapper is the best!!!
         System.out.println("actualData="+actualData);
         assertEquals(200,response.statusCode());
         assertEquals(expectedData.getFirstname(),actualData.getFirstname());
