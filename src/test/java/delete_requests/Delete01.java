@@ -55,7 +55,11 @@ public class Delete01 extends JsonPlaceHolderBaseUrl {
         //or
         response.then().assertThat().body("isEmpty()", Matchers.is(true));
 
+        //how to automate " Delete" request in API testing
+        //1) create a new data by using "post request"
+        //2)use "delete request" to delete new data.
 
+        //Note: do not delete existing data, create a data to delete
 
 
     }
