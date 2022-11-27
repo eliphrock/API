@@ -14,17 +14,14 @@ import static org.testng.AssertJUnit.assertEquals;
 import static utils.JsonUtils.convertJsonToJavaObject;
 
 public class S1Post extends HerOkuAppBaseUrl {
-
-    /*Type an automation smoke test by using "https://restful-booker.herokuapp.com/apidoc/index.html" documentation.
+     /*Type an automation smoke test by using "https://restful-booker.herokuapp.com/apidoc/index.html" documentation.
      Create a booking then update, read and delete the booking you created.
     */
     /*
     Given
-    https://restful-booker.herokuapp.com/booking
-
-And
-    The body should be like following
-    {
+        https://restful-booker.herokuapp.com/booking
+    And
+        {
             "firstname" : "Jim",
             "lastname" : "Brown",
             "totalprice" : 111,
@@ -34,18 +31,13 @@ And
                 "checkout" : "2019-01-01"
             },
             "additionalneeds" : "Breakfast"
-    }
-
-    when
-             use send post request
-
-    then
-
-             status code must be 201
-
-    and
-            response body is like
-            {
+        }
+    When
+        User sends Post request
+    Then
+        Status code must be 200
+    And
+        Response body is like {
                                 "bookingid": 18217,
                                 "booking": {
                                     "firstname": "Jim",
@@ -59,8 +51,9 @@ And
                                     "additionalneeds": "Breakfast"
                                 }
                             }
-
      */
+
+    static int bookingid;
     @Test
     public void post01(){
         //Set the url
@@ -89,6 +82,8 @@ And
         assertEquals(bookingDatesPojo.getCheckout(),actualData.getBooking().getBookingdates().getCheckout());
 
         assertEquals(expectedData.getAdditionalneeds(),actualData.getBooking().getAdditionalneeds());
+
+        bookingid = actualData.getBookingid();
 
     }
 }
