@@ -1,6 +1,23 @@
 package get_request;
 
-public class Get18 {
+import base_urls.GMIBankBaseUrl;
+import io.restassured.response.Response;
+import org.junit.Test;
+import static utils.AuthenticationGMIBank.generateToken;
+
+import io.restassured.response.Response;
+import org.junit.Test;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.hasSize;
+import static org.junit.Assert.assertEquals;
+
+public class Get18 extends GMIBankBaseUrl {
     /*
         Given
 	       http://www.gmibank.com/api/tp-customers/110452
@@ -42,4 +59,21 @@ public class Get18 {
                                         "accounts": []
                                     }
      */
+
+    @Test
+    public void get18(){
+
+        //set the url
+        spec.pathParams("first","tp-customers","second",110452);
+
+        //set the expected data
+
+
+        //send the request and get the response
+
+
+        Response response=given().spec(spec).headers("Authorization","Bearer "+generateToken()).when().get("/{first}/{second}");
+        response.prettyPrint();
+
+    }
 }
