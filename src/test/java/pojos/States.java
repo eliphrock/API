@@ -2,19 +2,19 @@ package pojos;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class State {
+public class States {
 
         private int id;
         private String name;
         private String tpcountry;
 
-        public State(int id, String name, String tpcountry) {
+        public States(int id, String name, String tpcountry) {
             this.id = id;
             this.name = name;
             this.tpcountry = tpcountry;
         }
 
-        public State() {
+        public States() {
         }
 
         public int getId() {
